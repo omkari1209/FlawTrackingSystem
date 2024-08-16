@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+			justify-content: center;
+			align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #2C3E50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            animation: fadeIn 2s;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 100px; /* Adjust for header height */
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            animation: slideIn 1s ease-in-out;
+            width: 80%;
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #2C3E50;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+            animation: fadeIn 2s;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <h1>Flaw Tracking System</h1>
+    </header>
+
+    <div class="container">
+        <h1>Thank You for Visiting!</h1>
+        <p>Your session has ended. We appreciate your visit.</p>
+        <!-- Update this link to your actual layout or dashboard page -->
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Flaw Tracking System. All rights reserved.</p>
+    </footer>
+	
+	
+</body>
+</html>

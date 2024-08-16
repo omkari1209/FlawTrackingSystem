@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Status - Flaw Tracking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #2C3E50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        table {
+            width: 80%;
+            margin-top: 80px;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #2C3E50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #2C3E50;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>User Status - Flaw Tracking System</h1>
+    </header>
+    
+    <main>
+        <table id="flawsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Application</th>
+                    <th>Module</th>
+					<th>Description</th>
+                    <th>Status</th>
+                    <th>Assigned</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Flaw Tracking System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flawsData = JSON.parse(localStorage.getItem('flawsData'));
+            const tableBody = document.querySelector('#flawsTable tbody');
+            
+            if (flawsData && flawsData.length > 0) {
+                flawsData.forEach(flaw => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${flaw.id}</td>
+                        <td>${flaw.application}</td>
+                        <td>${flaw.module}</td>
+						<td>${flaw.description}</td>
+                        <td>${flaw.status}</td>
+                        <td>${flaw.assigned || 'Assigning to engineer'}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="6">No flaws found.</td></tr>';
+            }
+
+            // Clear stored data after use
+            localStorage.removeItem('flawsData');
+        });
+    </script>
+</body>
+</html>

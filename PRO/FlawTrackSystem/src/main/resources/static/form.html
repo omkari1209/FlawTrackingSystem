@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flaw Tracking System</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script src="js/scripts.js" defer></script>
+</head>
+<body>
+    <h1>Edit Flaw</h1>
+       <form id="editFlawForm">
+           <input type="hidden" id="flawId" name="id">
+           <div>
+               <label for="editFlawApplication">Application:</label>
+               <input type="text" id="editFlawApplication" name="application" required>
+           </div>
+           <div>
+               <label for="editFlawModule">Module:</label>
+               <input type="text" id="editFlawModule" name="module" required>
+           </div>
+           <div>
+               <label for="editFlawDescription">Description:</label>
+               <textarea id="editFlawDescription" name="description" required></textarea>
+           </div>
+           <div>
+               <label for="editFlawAssignedTo">Assigned To:</label>
+               <input type="text" id="editFlawAssignedTo" name="assignedTo" required>
+           </div>
+           <div>
+               <label for="editFlawStatus">Status:</label>
+               <select id="editFlawStatus" name="status" required>
+                <option value="">Select Status</option>
+			    <option value="Open">Open</option>
+			    <option value="In Progress">In Progress</option>
+			    <option value="Resolved">Resolved</option>
+			    <option value="Closed">Closed</option>
+               </select>
+           </div>
+           <button Onclick="submit">Save</button>
+       </form>
+	   
+	   
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Flaw Tracking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+			flex-direction: column;
+		    align-items: center;
+        }
+
+        header {
+            background-color: #2C3E50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            animation: fadeIn 2s;
+        }
+
+        .menu-button {
+            font-size: 1.5em;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: 20px;
+			transition: transform 0.3s, color 0.3s;
+        }
+		
+		.menu-button:hover {
+		           
+		           color: #74ebd5;
+		       }
+
+        .header-right {
+            margin-right: 20px;
+        }
+
+        .header-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #2C3E50;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            padding-top: 60px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: left 0.3s ease;
+        }
+
+        .sidebar .close-button {
+            font-size: 1.5em;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-top: 50px; /* To adjust for the close button */
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: block;
+            padding: 10px 20px;
+            transition: background 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #74ebd5;
+            color: #2C3E50;
+        }
+
+        .content {
+            margin-left: 0;
+            padding: 80px 20px;
+            flex-grow: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+        .content.active {
+            margin-left: 250px;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+		.info-section {
+			    text-align: center;
+			    background: rgba(255, 255, 255, 0.2);
+			    padding: 40px 60px;
+			    border-radius: 15px;
+			    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+			    backdrop-filter: blur(10px);
+			    animation: slideIn 1s ease-in-out;
+			    width: 100%;
+			    max-width: 800px;
+			    margin-bottom: 50px;
+			}
+
+			.info-section h2 {
+			    font-size: 2em;
+			    margin-bottom: 20px;
+			    text-transform: uppercase;
+			    letter-spacing: 1.5px;
+			    color: #333;
+			}
+
+			.info-section p {
+			    line-height: 1.6;
+			    margin: 1em 0;
+			}
+
+			.info-section ul {
+			    list-style: none;
+			    padding: 0;
+			    text-align: left;
+			    margin: 20px auto;
+			    width: 80%;
+			}
+
+			.info-section ul li {
+			    background: url('images/check-icon.png') no-repeat left center;
+			    background-size: 1em;
+			    padding-left: 1.5em;
+			    margin-bottom: 0.5em;
+			}
+
+			.img-container {
+			    text-align: center;
+			    margin: 2em 0;
+			}
+
+			.img-container img {
+			    max-width: 100%;
+			    height: auto;
+			    border-radius: 8px;
+			    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #2C3E50;
+            color: white;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+            animation: fadeIn 2s;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="menu-button" onclick="toggleSidebar()">Menu</button>
+        <h1>Flaw Tracking System</h1>
+        <div class="header-right">
+            <a href="login" th:href="@{/login}">Login</a>
+            <a href="register" th:href="@{/register}">Register</a>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <button class="close-button" onclick="toggleSidebar()">X</button> <!-- Close button -->
+        <ul>
+			<li><a href="admin" th:href="@{/admin}">Admin</a></li>
+            <li><a href="home" th:href="@{/home}">Home</a></li>
+            <li><a href="about" th:href="@{/about}">About</a></li>
+            <li><a href="status" th:href="@{/status}">User Status</a></li>
+            <li><a href="login" th:href="@{/login}">Login</a></li>
+            <li><a href="register" th:href="@{/register}">Register</a></li>
+            
+        </ul>
+    </div>
+
+    <div class="content" id="content">
+        <section id="home">
+			<div class="info-section fadeIn">
+			   <h2>About Flaw Tracking System</h2>
+			   <p>The Flaw Tracking System helps you manage and track software defects effectively. With our system, you can easily log, track, and resolve issues, ensuring your software quality is maintained at the highest level.</p>
+			   <div class="img-container">
+			       <img src="images/bug-tracking.png" alt="Flaw Tracking Dashboard">
+			   </div>
+			   <h2>Key Features</h2>
+			   <ul>
+			       <li>Easy defect logging and tracking</li>
+			       <li>Comprehensive reporting and analytics</li>
+			       <li>Seamless integration with other tools</li>
+			       <li>Customizable workflows and notifications</li>
+			   </ul>
+			   <div class="img-container">
+			       <img src="images/bugtrack.png" alt="Defect Reporting">
+			   </div>
+			   <p>Join us and experience a streamlined approach to software defect management!</p>
+			 </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Flaw Tracking System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var content = document.getElementById('content');
+            sidebar.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

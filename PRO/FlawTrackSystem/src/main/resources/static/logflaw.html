@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flaw Tracking System - Log a New Flaw</title>
+	<script src="js/scripts.js"></script>
+	<style>
+		/* styles.css */
+
+		body {
+		    font-family: Arial, sans-serif;
+		    background: linear-gradient(to right, #74ebd5, #acb6e5);
+		    color: #333;
+		    margin: 0;
+		    padding: 0;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    justify-content: center;
+		    height: 100vh;
+		}
+
+		header {
+			background-color: #2C3E50;
+			color: white;
+			padding: 20px 0;
+		    text-align: center;
+			width: 100%;
+			z-index: 1000;
+			box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+		    position: fixed;
+			top: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		header h1 {
+		    margin: 0;
+		    font-size: 2.5em;
+		    animation: fadeIn 2s;
+		}
+
+		#flawFormContainer {
+		    background: rgba(255, 255, 255, 0.8);
+		    padding: 30px 50px;
+		    border-radius: 15px;
+		    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+		    backdrop-filter: blur(10px);
+		    animation: slideIn 1s ease-in-out;
+		    width: 80%;
+		    max-width: 600px;
+		    margin-bottom: 50px;
+		}
+
+		#flawFormContainer h2 {
+		    font-size: 2em;
+		    margin-bottom: 20px;
+		    color: #333;
+		}
+
+		.form-group {
+		    margin-bottom: 15px;
+		}
+
+		.form-group label {
+		    display: block;
+		    margin-bottom: 5px;
+		    font-weight: bold;
+		}
+
+		.form-group input, .form-group textarea {
+		    width: calc(100% - 20px);
+		    padding: 10px;
+		    border: 1px solid #ccc;
+		    border-radius: 5px;
+		    box-sizing: border-box;
+		    margin-bottom: 10px;
+		    background: #f9f9f9;
+		}
+
+		button {
+		    padding: 15px 30px;
+		    background-color: #6a11cb;
+		    color: #fff;
+		    border: none;
+		    border-radius: 30px;
+		    cursor: pointer;
+		    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+		    font-size: 1.2em;
+		    font-weight: bold;
+		    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+		}
+
+		button:hover {
+		    background: #2575fc;
+		    transform: translateY(-5px);
+		    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+		}
+
+		footer {
+		    text-align: center;
+		    padding: 10px 0;
+		    background-color: #2C3E50;
+		    color: white;
+		    position: fixed;
+		    width: 100%;
+		    bottom: 0;
+		    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+		    animation: fadeIn 2s;
+		}
+
+		footer p {
+		    margin: 0;
+		}
+
+		@keyframes fadeIn {
+		    0% { opacity: 0; }
+		    100% { opacity: 1; }
+		}
+
+		@keyframes slideIn {
+		    0% { transform: translateY(20px); opacity: 0; }
+		    100% { transform: translateY(0); opacity: 1; }
+		}
+
+
+	</style>
+</head>
+<body>
+	<header>
+    <h1>Flaw Tracking System</h1>
+	</header>
+	<div id="flawFormContainer">
+	        <h2>Log a New Flaw</h2>
+	        <form id="flawForm" method="post">
+	            <input type="hidden" id="userId" name="userId"> <!-- Example userId -->
+	            <div class="form-group">
+	                <label for="application">Application:</label>
+	                <input type="text" id="application" name="application" required>
+	            </div>
+	            <div class="form-group">
+	                <label for="module">Module:</label>
+	                <input type="text" id="module" name="module" required>
+	            </div>
+	            <div class="form-group">
+	                <label for="description">Description:</label>
+	                <textarea id="description" name="description" required></textarea>
+	            </div>
+	            <button type="submit">Submit</button>
+	        </form>
+	    </div>
+	<footer>
+		<p>&copy; 2024 Flaw Tracking System. All rights reserved.</p>
+	</footer>
+</body>
+</html>

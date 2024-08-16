@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flaw Tracking System - User Dashboard</title>
+    <style>
+		body {
+		    font-family: Arial, sans-serif;
+		    background: linear-gradient(to right, #74ebd5, #acb6e5);
+		    color: #333;
+		    margin: 0;
+		    padding: 0;
+		    display: flex;
+			justify-content: center;
+			align-items: center;
+		    flex-direction: column;
+		    min-height: 100vh;
+		}
+
+		header {
+		    background-color: #2C3E50;
+		    color: white;
+		    padding: 20px 0;
+		    text-align: center;
+		    width: 100%;
+		    z-index: 1000;
+		    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+		    position: fixed;
+		    top: 0;
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+			padding-left: 20px;
+			padding-right: 20px;
+		    transition: background-color 0.3s;
+		}
+
+		header h1 {
+		    margin: 0;
+		    font-size: 2.5em;
+		    animation: fadeIn 2s;
+		}
+
+		.container {
+		    text-align: center;
+		    margin-top: 100px; /* Adjust for header height */
+		    background: rgba(255, 255, 255, 0.8);
+		    padding: 40px 60px;
+		    border-radius: 15px;
+		    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+		    backdrop-filter: blur(10px);
+		    animation: slideIn 1s ease-in-out;
+		    width: 80%;
+		    max-width: 600px;
+		    margin-bottom: 50px;
+		}
+
+		footer {
+		    text-align: center;
+		    padding: 10px 0;
+		    background-color: #2C3E50;
+		    color: white;
+		    position: fixed;
+		    width: 100%;
+		    bottom: 0;
+		    box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+		    animation: fadeIn 2s;
+		}
+
+		footer p {
+		    margin: 0;
+		}
+
+		/* Dropdown container */
+		.dropdown {
+		    position: relative;
+		    display: inline-block;
+		    margin-left: 20px; /* Adjust as needed for spacing from other elements */
+		    transition: transform 0.3s, background-color 0.3s;
+		}
+
+		/* Dropdown button */
+		.dropbtn {
+		    background-color: #ff758c; /* Button background color */
+		    border: none;
+		    color: white;
+		    padding: 10px 20px;
+		    font-size: 1em;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    transition: background-color 0.3s, transform 0.3s;
+		    outline: none; /* Remove default outline */
+		}
+
+		.dropbtn:hover {
+		    background-color: #e14f6e; /* Darker shade on hover */
+		    transform: scale(1.05);
+		}
+
+		/* Dropdown content (hidden by default) */
+		.dropdown-content {
+		    display: none;
+		    position: absolute;
+		    background-color: #ffffff; /* Dropdown background color */
+		    min-width: 160px;
+		    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+		    z-index: 1;
+		    right: 0; /* Align dropdown to the right */
+		    opacity: 0;
+		    visibility: hidden;
+		    transition: opacity 0.3s, visibility 0.3s;
+		}
+
+		/* Dropdown links */
+		.dropdown-content a {
+		    color: #333; /* Link color */
+		    padding: 12px 16px;
+		    text-decoration: none;
+		    display: block;
+		    transition: background-color 0.3s, color 0.3s;
+		    font-size: 1em;
+		}
+
+		/* Dropdown link hover */
+		.dropdown-content a:hover {
+		    background-color: #f1f1f1;
+		    color: #ff758c; /* Change color on hover to match button */
+		}
+
+		/* Show dropdown content on hover */
+		.dropdown:hover .dropdown-content {
+		    display: block;
+		    opacity: 1;
+		    visibility: visible;
+		}
+
+		/* Optional: Scale effect on dropdown button hover */
+		.dropdown:hover .dropbtn {
+		    background-color: #e14f6e;
+		    transform: scale(1.05);
+		}
+
+		/* Options Section */
+		.options {
+		    margin-top: 60px;
+		    display: flex;
+		    justify-content: center;
+		    gap: 20px;
+		}
+
+		.options button {
+		    background-color: #ff758c; /* Button background color */
+		    border: none;
+		    color: white;
+		    padding: 15px 25px;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    font-size: 1.2em;
+		    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+		    outline: none; /* Remove default outline */
+		}
+
+		.options button:hover {
+		    background-color: #e14f6e; /* Darker shade on hover */
+		    transform: translateY(-3px);
+		    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+		}
+
+		.options button:active {
+		    background-color: #d43f5a; /* Even darker shade on click */
+		    transform: translateY(1px);
+		    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+		}
+
+		/* Keyframes for option fade-in animation */
+		@keyframes fadeInUp {
+		    0% {
+		        transform: translateY(20px);
+		        opacity: 0;
+		    }
+		    100% {
+		        transform: translateY(0);
+		        opacity: 1;
+		    }
+		}
+
+		@keyframes fadeIn {
+		    0% { opacity: 0; }
+		    100% { opacity: 1; }
+		}
+
+		@keyframes slideIn {
+		    0% { transform: translateY(20px); opacity: 0; }
+		    100% { transform: translateY(0); opacity: 1; }
+		}
+
+		@keyframes fadeInUp {
+		    0% { opacity: 0; transform: translateY(10px); }
+		    100% { opacity: 1; transform: translateY(0); }
+		}
+		
+		.menu-button {
+		       font-size: 1.5em;
+		       background: none;
+		       border: none;
+		       color: white;
+		       cursor: pointer;
+		       margin-right: 100px;
+			transition: transform 0.3s, color 0.3s;
+		   }
+
+		.menu-button:hover {
+		           
+		           color: #74ebd5;
+		       }
+
+		   .header-right {
+		       margin-right: 20px;
+		   }
+
+		   .header-right a {
+		       color: white;
+		       text-decoration: none;
+		       margin-left: 20px;
+		       font-size: 1.2em;
+		   }
+
+		   .sidebar {
+		       width: 250px;
+		       background-color: #2C3E50;
+		       color: white;
+		       height: 100vh;
+		       position: fixed;
+		       top: 0;
+		       left: -250px;
+		       padding-top: 60px;
+		       box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+		       overflow-y: auto;
+		       z-index: 1000;
+		       transition: left 0.3s ease;
+		   }
+
+		   .sidebar .close-button {
+		       font-size: 1.5em;
+		       background: none;
+		       border: none;
+		       color: white;
+		       cursor: pointer;
+		       position: absolute;
+		       top: 10px;
+		       right: 10px;
+		   }
+
+		   .sidebar ul {
+		       list-style: none;
+		       padding: 0;
+		       margin: 0;
+		       margin-top: 50px; /* To adjust for the close button */
+		   }
+
+		   .sidebar ul li {
+		       margin: 20px 0;
+		   }
+
+		   .sidebar ul li a {
+		       color: white;
+		       text-decoration: none;
+		       font-size: 1.2em;
+		       display: block;
+		       padding: 10px 20px;
+		       transition: background 0.3s;
+		   }
+
+		   .sidebar ul li a:hover {
+		       background-color: #74ebd5;
+		       color: #2C3E50;
+		   }
+		   
+		   .sidebar.active {
+		               left: 0;
+		           }
+
+    </style>
+</head>
+<body>
+    <header>
+		<button class="menu-button" onclick="toggleSidebar()">Menu</button>
+        <h1>Flaw Tracking System</h1>
+        <div class="dropdown">
+            <button class="dropbtn">User Profile</button>
+            <div class="dropdown-content">
+                <a href="#" id="logout">Logout</a>
+            </div>
+        </div>
+    </header>
+	
+	<div class="sidebar" id="sidebar">
+	        <button class="close-button" onclick="toggleSidebar()">X</button> <!-- Close button -->
+	        <ul>
+				<li><a href="admin" th:href="@{/admin}">Admin</a></li>
+	            <li><a href="home" th:href="@{/home}">Home</a></li>
+	            <li><a href="about" th:href="@{/about}">About</a></li>
+				<li><a href="register" th:href="@{/register}">Register</a></li>
+	            <li><a href="contact" th:href="@{/contact}">Contact Us</a></li>
+	        </ul>
+	    </div>
+	
+	<div id="userPage" class="container">
+	       <h1>Welcome</h1>
+	       <hr>
+	       <div class="options">
+	           <button onclick="location.href='/flawtrack/logflaw.html'">Log a New Flaw</button>
+	           <button id="viewFlaws">View Your Flaws</button>
+	       </div>
+	       <div id="flawsContainer"></div>
+	   </div>
+
+	   <footer>
+	       <p>&copy; 2024 Flaw Tracking System. All rights reserved.</p>
+	   </footer>
+
+	   <script>
+		/*document.getElementById('viewFlaws').addEventListener('click', async function() {
+		           try {
+		               const response = await fetch('/flawtrack/api/flaws/myflaws', {
+		                   method: 'GET',
+		                   headers: {
+		                       'Content-Type': 'application/json'
+		                   },
+		                   credentials: 'include' // Include cookies (session cookies) in the request
+		               });
+		               if (!response.ok) throw new Error('Network response was not ok');
+		               const flaws = await response.json();
+		               const flawsContainer = document.getElementById('flawsContainer');
+		               flawsContainer.innerHTML = '';
+		               if (flaws.length > 0) {
+		                   const flawList = document.createElement('ul');
+		                   flaws.forEach(flaw => {
+		                       const listItem = document.createElement('li');
+		                       listItem.textContent = `ID: ${flaw.id}, Description: ${flaw.description}, Application: ${flaw.application}, Module: ${flaw.module}, Status: ${flaw.status}, Assigned: ${flaw.assigned}`;
+		                       flawList.appendChild(listItem);
+		                   });
+		                   flawsContainer.appendChild(flawList);
+		               } else {
+		                   flawsContainer.textContent = 'No flaws logged by you.';
+		               }
+		           } catch (error) {
+		               console.error('Error fetching user flaws:', error);
+		               document.getElementById('flawsContainer').textContent = 'Error fetching flaws. Please try again later.';
+		           }
+		       });*/
+			   
+			   function toggleSidebar() {
+			               var sidebar = document.getElementById('sidebar');
+			               var content = document.getElementById('content');
+			               sidebar.classList.toggle('active');
+			               content.classList.toggle('active');
+			           }
+			   
+			   document.getElementById('viewFlaws').addEventListener('click', async function() {
+			       try {
+			           const response = await fetch('/flawtrack/api/flaws/myflaws', {
+			               method: 'GET',
+			               headers: {
+			                   'Content-Type': 'application/json'
+			               },
+			               credentials: 'include' // Include cookies (session cookies) in the request
+			           });
+			           if (!response.ok) throw new Error('Network response was not ok');
+			           const flaws = await response.json();
+
+			           // Store flaws data in localStorage
+			           localStorage.setItem('flawsData', JSON.stringify(flaws));
+
+			           // Redirect to user status page
+			           window.location.href = '/flawtrack/userstatus.html';
+			       } catch (error) {
+			           console.error('Error fetching user flaws:', error);
+			           document.getElementById('flawsContainer').textContent = 'Error fetching flaws. Please try again later.';
+			       }
+			   });
+
+		       document.getElementById('logout').addEventListener('click', async function(event) {
+		           event.preventDefault();
+		           try {
+		               const response = await fetch('/flawtrack/logout', { method: 'POST', credentials: 'include' });
+		               if (response.ok) {
+		                   window.location.href = '/flawtrack/thank.html';
+		               } else {
+		                   throw new Error('Logout failed');
+		               }
+		           } catch (error) {
+		               console.error('Error during logout:', error);
+		               alert('Logout failed');
+		           }
+		       });
+    </script>
+</body>
+</html>

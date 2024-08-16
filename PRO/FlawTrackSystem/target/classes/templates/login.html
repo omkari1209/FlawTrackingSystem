@@ -1,0 +1,292 @@
+<!DOCTYPE>
+<html>
+<head>
+<title>Flaw Tracking System</title>
+<style>
+	body {
+	    font-family: Arial, sans-serif;
+	    background: linear-gradient(to right, #74ebd5, #acb6e5);
+	    color: #333;
+	    margin: 0;
+	    padding: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+					
+	}
+
+	header {
+				background-color: #2C3E50;
+				color: white;
+				padding: 20px 0;
+			    text-align: center;
+				width: 100%;
+				z-index: 1000;
+				box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+			    position: fixed;
+				top: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			header h1 {
+			    margin: 0;
+			    font-size: 2.5em;
+			    animation: fadeIn 2s;
+			}
+
+	.container {
+	    text-align: center;
+	    margin-top: 50px; /* Adjust as needed */
+	    background: rgba(255, 255, 255, 0.2);
+	    padding: 40px 60px;
+	    border-radius: 15px;
+	    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	    backdrop-filter: blur(10px);
+	    animation: slideIn 1s ease-in-out;
+	    width: 80%; /* Adjust width as needed */
+	    max-width: 600px; /* Example maximum width */
+	    margin-bottom: 50px; /* Space at the bottom */
+	}
+
+	form {
+	    margin-top: 20px; /* Adjust margin as needed */
+	}
+
+	h1 {
+	    font-size: 2.5em;
+	    margin-bottom: 20px;
+	    text-transform: uppercase;
+	    letter-spacing: 1.5px;
+	    color: white;
+	}
+
+	hr {
+	    border: 0;
+	    height: 2px;
+	    background: #333;
+	    margin: 20px auto;
+	    width: 60%;
+	    border-radius: 2px;
+	}
+
+	label {
+	    font-weight: bold;
+	    display: block;
+	    margin-bottom: 5px;
+	    color: #333;
+	}
+
+	input[type="email"], input[type="password"] {
+	    width: calc(100% - 20px);
+	    padding: 10px;
+	    margin-bottom: 10px;
+	    border: 1px solid #ccc;
+	    border-radius: 5px;
+	    box-sizing: border-box;
+	}
+
+	button[type="submit"] {
+	    width: 100%;
+	    padding: 15px;
+	    background-color: #ff7eb3;
+	    color: #fff;
+	    border: none;
+	    border-radius: 30px;
+	    cursor: pointer;
+	    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+	    font-size: 1.2em;
+	    font-weight: bold;
+	    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	button[type="submit"]:hover {
+	    background: #ff758c;
+	    transform: translateY(-5px);
+	    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+	}
+
+	.links {
+	    margin-top: 20px;
+	    font-size: 1.1em;
+	}
+
+	.links a {
+	    color: #fff;
+	    text-decoration: none;
+	    margin: 0 10px;
+	    transition: color 0.3s;
+	}
+
+	.links a:hover {
+	    color: #ff758c;
+	    text-decoration: underline;
+	}
+	
+
+	footer {
+	    text-align: center;
+	    padding: 10px 0;
+	    background-color: #2C3E50;
+	    color: white;
+	    position: fixed;
+	    width: 100%;
+	    bottom: 0;
+	    box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+	    animation: fadeIn 2s;
+	}
+
+	footer p {
+	    margin: 0;
+	}
+	
+	#successMessage, #errorMessage {
+	          display: none;
+	          color: green; /* For success message */
+	      }
+
+	      #errorMessage {
+	          color: red; /* For error message */
+	      }
+
+	@keyframes fadeIn {
+	    0% { opacity: 0; }
+	    100% { opacity: 1; }
+	}
+
+	@keyframes slideIn {
+	    0% { transform: translateY(20px); opacity: 0; }
+	    100% { transform: translateY(0); opacity: 1; }
+	}
+
+</style>
+</head>
+<body>
+	<header>
+		<h1>Flaw Tracking System</h1>
+	</header>
+	<div id="login" class="container">
+		<h1>Login Page</h1>
+        <hr>
+        <form id="loginForm" method="post">
+		<label for="email">Username:</label> 
+		<input type="email"	id="email" name="email" required> 
+		<label for="password">Password:</label>
+		<input type="password" id="password" name="password" required>
+		
+		<button type="submit">Login</button>
+		<div class="links">
+		<a href="forgot.html">Forgot Password</a>
+		</div>
+		</form>
+		<p id="successMessage">Login successful! Redirecting...</p>
+		<p id="errorMessage">Invalid credentials. Please try again.</p>
+	</div>
+	<script>
+		
+		
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+			const successMessage = document.getElementById('successMessage');
+		    const errorMessage = document.getElementById('errorMessage');
+            form.addEventListener('submit', async function(event) {
+                event.preventDefault(); // Prevent the form from submitting
+
+                // Validate inputs
+                if (!validateEmail(form.email.value)) {
+                    setErrorFor(form.email, 'Email is not valid');
+                    return;
+                } else {
+                    setSuccessFor(form.email);
+                }
+
+                if (!validatePassword(form.password.value)) {
+                    setErrorFor(form.password, 'Password must be at least 6 characters');
+                    return;
+                } else {
+                    setSuccessFor(form.password);
+                }
+
+                // Simulate login logic (replace with actual backend integration)
+                try {
+                    const response = await fetch('/flawtrack/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: form.email.value,
+                            password: form.password.value
+                        }),
+						credentials: 'include'
+                    });
+
+					
+					if (!response.ok) 
+					{
+				            throw new Error(data.error || 'Login failed');
+					    }
+						
+ 
+						const data = await response.json();
+					                    // Handle success
+						
+					                    localStorage.setItem('userId', data.id);
+										//localStorage.setItem('userEmail', 'user@example.com'); // Set this during login
+					                    successMessage.style.display = 'block'; // Show success message
+					                    errorMessage.style.display = 'none'; // Hide error message if displayed
+					                    setTimeout(() => {
+					                        window.location.href = '/flawtrack/userpage.html'; // Redirect to user page
+					                    }, 2000); // Delay redirect to allow the user to see the success message
+
+					                } catch (error) {
+					                    console.error('Error logging in:', error);
+					                    successMessage.style.display = 'none'; // Hide success message if displayed
+					                    errorMessage.style.display = 'block'; // Show error message
+					                }
+				
+                  /*  // Redirect to dashboard or show success message
+                    alert('Login successful');
+                    // Example redirect:
+                   window.location.href = '/flawtrack/userpage.html'; // Adjust the URL as per your application
+                  */
+                
+			/*	catch (error) {
+                    console.error('Error logging in:', error);
+                    alert(error.message || 'Login failed');
+                }*/
+				/*catch (error) {
+				                        console.error('Error parsing JSON response:', error);
+				                        displayErrorMessage('Server response could not be processed'); // Display an error due to invalid JSON
+				                    }*/
+            });
+            
+
+            function setErrorFor(input, message) {
+                const formControl = input.parentElement; // .form-control
+                const small = formControl.querySelector('small');
+
+                // Add error message and class
+                small.innerText = message;
+                formControl.className = 'form-control error';
+            }
+
+            function setSuccessFor(input) {
+                const formControl = input.parentElement; // .form-control
+                formControl.className = 'form-control success';
+            }
+
+            function validateEmail(email) {
+                // Basic email validation using regex
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            function validatePassword(password) {
+                // Password validation: at least 6 characters
+                return password.length >= 6;
+            }
+        });
+    </script>
+</body>
+</html>

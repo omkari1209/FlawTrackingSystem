@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Flaw Tracking System</title>
+<!--  <link rel="stylesheet" href="/flawtrak/resource/static/css/home.css">-->
+<style>
+	body {
+	    font-family: Arial, sans-serif;
+	    background: linear-gradient(to right, #74ebd5, #acb6e5);
+	    color: #333;
+	    margin: 0;
+	    padding: 0;
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	}
+
+	header {
+	    background-color: #2C3E50;
+	    color: white;
+	    padding: 20px 0;
+	    text-align: center;
+	    position: sticky;
+	    top: 0;
+	    width: 100%;
+	    z-index: 1000;
+	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	header h1 {
+	    margin: 0;
+	    font-size: 2.5em;
+	    animation: fadeIn 2s;
+	}
+
+	.container {
+	    text-align: center;
+	    margin-top: 50px;
+	    background: rgba(255, 255, 255, 0.2);
+	    padding: 40px 60px;
+	    border-radius: 15px;
+	    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	    backdrop-filter: blur(10px);
+	    animation: slideIn 1s ease-in-out;
+	    width: 80%;
+	    max-width: 800px;
+	    margin-bottom: 50px;
+	}
+
+	.info-section {
+	    text-align: center;
+	    background: rgba(255, 255, 255, 0.2);
+	    padding: 40px 60px;
+	    border-radius: 15px;
+	    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	    backdrop-filter: blur(10px);
+	    animation: slideIn 1s ease-in-out;
+	    width: 80%;
+	    max-width: 800px;
+	    margin-bottom: 50px;
+	}
+
+	.info-section h2 {
+	    font-size: 2em;
+	    margin-bottom: 20px;
+	    text-transform: uppercase;
+	    letter-spacing: 1.5px;
+	    color: #333;
+	}
+
+	.info-section p {
+	    line-height: 1.6;
+	    margin: 1em 0;
+	}
+
+	.info-section ul {
+	    list-style: none;
+	    padding: 0;
+	    text-align: left;
+	    margin: 20px auto;
+	    width: 80%;
+	}
+
+	.info-section ul li {
+	    background: url('images/check-icon.png') no-repeat left center;
+	    background-size: 1em;
+	    padding-left: 1.5em;
+	    margin-bottom: 0.5em;
+	}
+
+	.img-container {
+	    text-align: center;
+	    margin: 2em 0;
+	}
+
+	.img-container img {
+	    max-width: 100%;
+	    height: auto;
+	    border-radius: 8px;
+	    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+
+	hr {
+	    border: 0;
+	    height: 2px;
+	    background: #333;
+	    margin: 20px auto;
+	    width: 60%;
+	    border-radius: 2px;
+	}
+
+	footer {
+	    text-align: center;
+	    padding: 10px 0;
+	    background-color: #2C3E50;
+	    color: white;
+	    position: fixed;
+	    width: 100%;
+	    bottom: 0;
+	    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+	    animation: fadeIn 2s;
+	}
+
+	footer p {
+	    margin: 0;
+	}
+
+	@keyframes fadeIn {
+	    0% { opacity: 0; }
+	    100% { opacity: 1; }
+	}
+
+	@keyframes slideIn {
+	    0% { transform: translateY(20px); opacity: 0; }
+	    100% { transform: translateY(0); opacity: 1; }
+	}
+
+
+</style>
+</head>
+<body>
+    <header>
+        <h1>Flaw Tracking System</h1>
+    </header>
+    <div class="container">
+        <h1 class="fadeIn">Welcome to Flaw Tracking System</h1>
+        <hr class="fadeIn">
+    </div>
+    <div class="info-section fadeIn">
+        <h2>About Flaw Tracking System</h2>
+        <p>The Flaw Tracking System helps you manage and track software defects effectively. With our system, you can easily log, track, and resolve issues, ensuring your software quality is maintained at the highest level.</p>
+        <div class="img-container">
+            <img src="images/bug-tracking.png" alt="Flaw Tracking Dashboard">
+        </div>
+        <h2>Key Features</h2>
+        <ul>
+            <li>Easy defect logging and tracking</li>
+            <li>Comprehensive reporting and analytics</li>
+            <li>Seamless integration with other tools</li>
+            <li>Customizable workflows and notification</li>
+        </ul>
+        <div class="img-container">
+            <img src="images/bugtrack.png" alt="Defect Reporting">
+        </div>
+        <p>Join us and experience a streamlined approach to software defect management!</p>
+    </div>
+    <footer>
+        <p>&copy; 2024 Flaw Tracking System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

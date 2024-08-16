@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flaw Tracking System - Register</title>
+<style>
+	body {
+	    font-family: Arial, sans-serif;
+	    background: linear-gradient(to right, #74ebd5, #acb6e5);
+	    color: #333;
+	    margin: 0;
+	    padding: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	header {
+		background-color: #2C3E50;
+						color: white;
+						padding: 20px 0;
+					    text-align: center;
+						width: 100%;
+						z-index: 1000;
+						box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+					    position: fixed;
+						top: 0;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+				
+			}
+
+   header h1 {
+			    margin: 0;
+			    font-size: 2.5em;
+			    animation: fadeIn 2s;
+			}
+			
+
+	.container {
+	    text-align: center;
+	    margin-top: 50px; /* Adjust as needed */
+	    background: rgba(255, 255, 255, 0.2);
+	    padding: 40px 60px;
+	    border-radius: 15px;
+	    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	    backdrop-filter: blur(10px);
+	    animation: slideIn 1s ease-in-out;
+	    width: 80%; /* Adjust width as needed */
+	    max-width: 400px; /* Example maximum width */
+	    margin-bottom: 50px; /* Space at the bottom */
+	}
+
+	form {
+	    margin-top: 20px; /* Adjust margin as needed */
+	}
+
+	h2 {
+	    font-size: 2.5em;
+	    margin-bottom: 20px;
+	    text-transform: uppercase;
+	    letter-spacing: 1.5px;
+	    color: #333;
+	}
+
+	hr {
+	    border: 0;
+	    height: 2px;
+	    background: #333;
+	    margin: 20px auto;
+	    width: 60%;
+	    border-radius: 2px;
+	}
+
+	label {
+	    font-weight: bold;
+	    display: block;
+	    margin-bottom: 5px;
+	    color: #333;
+	}
+
+	input[type="text"], input[type="email"], input[type="password"], input[type="tel"], select {
+	    width: calc(100% - 20px);
+	    padding: 10px;
+	    margin-bottom: 10px;
+	    border: 1px solid #ccc;
+	    border-radius: 5px;
+	    box-sizing: border-box;
+	}
+
+	button[type="submit"] {
+	    width: 100%;
+	    padding: 15px;
+	    background-color: #6a11cb;
+	    color: #fff;
+	    border: none;
+	    border-radius: 30px;
+	    cursor: pointer;
+	    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+	    font-size: 1.2em;
+	    font-weight: bold;
+	    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	button[type="submit"]:hover {
+	    background: #2575fc;
+	    transform: translateY(-5px);
+	    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+	}
+
+	footer {
+	    text-align: center;
+	    padding: 10px 0;
+	    background-color: #2C3E50;
+	    color: white;
+	    position: fixed;
+	    width: 100%;
+	    bottom: 0;
+	    box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+	    animation: fadeIn 2s;
+	}
+
+	footer p {
+	    margin: 0;
+	}
+
+	@keyframes fadeIn {
+	    0% { opacity: 0; }
+	    100% { opacity: 1; }
+	}
+
+	@keyframes slideIn {
+	    0% { transform: translateY(20px); opacity: 0; }
+	    100% { transform: translateY(0); opacity: 1; }
+	}
+
+</style>
+</head>
+<body>
+	<header>
+		<h1>Flaw Tracking System</h1>
+	</header>
+	<div class="container">
+		
+		<h2>Register Page</h2>
+		<hr>
+		<form id="registerForm" method="post">
+			<label for="name">Name:</label> 
+			<input type="text" id="name"name="name" required><br> <br> 
+			<label for="email">Email:</label>
+			<input type="email" id="email" name="email" required><br><br> 
+			<label for="password">Password:</label> 
+			<input type="password" id="password" name="password" required><br><br>
+			<label for="phoneno">PhoneNo:</label> 
+			<input type="tel" id="phoneno" name="phoneno" pattern="[0-9]{10}" required><br><br>
+			<label for="role">Role:</label>
+			<select id="role" name="role" required>
+			                <option value="">Select a role</option>
+			                <option value="user">User</option>
+			            </select><br><br>
+			<button type="submit">Submit</button>
+		</form>
+		<p id="successMessage" style="display: none;">
+			User registered successfully! <a href="/flawtrack/">Go back to
+				home page and login</a>
+		</p>
+		<p id="errorMessage" style="display: none;">
+			User is already exist!!! <a href="/flawtrack/">Go back to home
+				page and login</a>
+		</p>
+	</div>
+	
+
+	<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registerForm');
+			const successMessage=document.getElementById('successMessage');
+			const errorMessage=document.getElementById('errorMessage');
+
+            form.addEventListener('submit', async function(event) {
+                event.preventDefault(); // Prevent the form from submitting
+
+                // Validate inputs
+                let isValid = true;
+
+                // Validate name (required)
+                const nameInput = document.getElementById('name');
+                if (!nameInput.value.trim()) {
+                    isValid = false;
+                    setErrorFor(nameInput, 'Name cannot be blank');
+                } else {
+                    setSuccessFor(nameInput);
+                }
+
+                // Validate email (required and format)
+                const emailInput = document.getElementById('email');
+                if (!emailInput.value.trim()) {
+                    isValid = false;
+                    setErrorFor(emailInput, 'Email cannot be blank');
+                } else if (!isEmailValid(emailInput.value.trim())) {
+                    isValid = false;
+                    setErrorFor(emailInput, 'Email is not valid');
+                } else {
+                    setSuccessFor(emailInput);
+                }
+
+                // Validate password (required)
+                const passwordInput = document.getElementById('password');
+                if (!passwordInput.value.trim()) {
+                    isValid = false;
+                    setErrorFor(passwordInput, 'Password cannot be blank');
+                } else {
+                    setSuccessFor(passwordInput);
+                }
+
+                // Validate phone number (required and numeric)
+                const phoneInput = document.getElementById('phoneno');
+                if (!phoneInput.value.trim()) {
+                    isValid = false;
+                    setErrorFor(phoneInput, 'Phone number cannot be blank');
+                } else if (!isPhoneValid(phoneInput.value.trim())) {
+                    isValid = false;
+                    setErrorFor(phoneInput, 'Phone number is not valid');
+                } else {
+                    setSuccessFor(phoneInput);
+                }
+				
+				const roleInput = document.getElementById('role');
+				                if (!roleInput.value) {
+				                    isValid = false;
+				                    setErrorFor(roleInput, 'Role must be selected');
+				                } else {
+				                    setSuccessFor(roleInput);
+				                }
+
+                // If all inputs are valid, submit the form
+                if (isValid) {
+                    await registerUser();
+                }
+            });
+
+            function setErrorFor(input, message) {
+                const formControl = input.parentElement; // .form-control
+                const small = formControl.querySelector('small');
+
+                // Add error message and class
+                small.innerText = message;
+                formControl.className = 'form-control error';
+            }
+
+            function setSuccessFor(input) {
+                const formControl = input.parentElement; // .form-control
+                formControl.className = 'form-control success';
+            }
+
+            function isEmailValid(email) {
+                // Basic email validation using regex
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            function isPhoneValid(phone) {
+                // Basic phone number validation
+                return /^\d{10}$/.test(phone); // Assuming phone number is 10 digits
+            }
+
+            async function registerUser() {
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch('/flawtrack/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: formData.get('name'),
+                            email: formData.get('email'),
+                            password: formData.get('password'),
+                            phoneno: formData.get('phoneno'),
+							role:formData.get('role')
+                        })
+                    });
+
+                    if (response.ok) {
+                    	//throw new Error('Failed to register user');
+                    	displaySuccessMessage(); // Display success message
+                        alert('User registration successful');
+                    }
+					
+					const data = await response.json();
+					if (data.userId) {
+					                localStorage.setItem('userId', data.userId);
+					                //window.location.href = '/flawtrack/login.html'; // Redirect to login
+					            }
+                    
+                      
+                      // Optionally, redirect to another page after successful registration
+                         //window.location.href = '/flawtrack/'; // Redirect to home page
+
+                    try {
+                        const data = await response.json();
+
+                        if (data.error) {
+                            displayErrorMessage(data.error); // Display specific error message from server
+                            //const message='User already exist';
+                            alert('User already exist');
+                        } 
+                    } 						catch (error) {
+						                   console.error('Error registering user:', error);
+						                   alert(error.message || 'Failed to register user');
+						               }
+                    
+                }
+
+                
+				catch (error) {
+				                        console.error('Error parsing JSON response:', error);
+				                        displayErrorMessage('Server response could not be processed'); // Display an error due to invalid JSON
+				                    }
+            }
+            
+            function displaySuccessMessage() {
+            	//successMessage.innerText='successMessage' ;
+                successMessage.style.display = 'block'; // Show success message
+                errorMessage.style.display = 'none'; // Hide error message if displayed
+                form.style.display = 'none'; // Hide the registration form
+            }
+
+            function displayErrorMessage() {
+               // errorMessage.innerText = message; // Set error message text
+                errorMessage.style.display = 'block'; // Show error message
+                successMessage.style.display = 'none'; // Hide success message if displayed
+                form.style.display = 'none'; // Hide the registration form
+            }
+        });
+    </script>
+	<footer>
+	        <p>&copy; 2024 Flaw Tracking System. All rights are reserved</p>
+	</footer>
+</body>
+</html>

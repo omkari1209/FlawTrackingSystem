@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Flaw Tracking System - Forgot Password</title>
+		<style>
+			body {
+			    font-family: Arial, sans-serif;
+			    background: linear-gradient(to right, #74ebd5, #acb6e5);
+			    color: #333;
+			    margin: 0;
+			    padding: 0;
+			    display: flex;
+			    justify-content: center;
+			    align-items: center;
+			    height: 100vh;
+			}
+
+			header {
+			    background-color: #2C3E50;
+			    color: white;
+			    padding: 20px 0;
+			    text-align: center;
+			    position: sticky;
+			    top: 0;
+			    width: 100%;
+			    z-index: 1000;
+			    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+			}
+
+			header h1 {
+			    margin: 0;
+			    font-size: 2.5em;
+			    animation: fadeIn 2s;
+			}
+
+			.container {
+			    text-align: center;
+			    margin-top: 50px; /* Adjust as needed */
+			}
+
+			form {
+			    background: rgba(255, 255, 255, 0.2);
+			    padding: 40px 60px;
+			    border-radius: 15px;
+			    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+			    backdrop-filter: blur(10px);
+			    animation: slideIn 1s ease-in-out;
+			    position: relative;
+			}
+
+			.form-group {
+			    margin-bottom: 20px;
+			    position: relative;
+			}
+
+			label {
+			    font-weight: bold;
+			    display: block;
+			    margin-bottom: 5px;
+			    color: #333;
+			    text-align: left;
+			}
+
+			.input-wrapper {
+			    position: relative;
+			    width: 100%;
+			}
+
+			input[type="email"], input[type="password"] {
+			    width: 100%;
+			    padding: 10px;
+			    margin-bottom: 10px;
+			    border: 1px solid #ccc;
+			    border-radius: 10px;
+			    box-sizing: border-box;
+			    padding-right: 10px; /* space for the eye icon */
+			}
+
+			.eye-icon {
+			    position: absolute;
+			    right: 10px;
+			    top: 50%;
+			    transform: translateY(-50%);
+			    cursor: pointer;
+			    color: #888;
+			}
+
+			button[type="submit"] {
+			    width: 100%;
+			    padding: 15px;
+			    background-color: #ff7eb3;
+			    color: #fff;
+			    border: none;
+			    border-radius: 30px;
+			    cursor: pointer;
+			    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+			    font-size: 1.2em;
+			    font-weight: bold;
+			    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+			}
+
+			button[type="submit"]:hover {
+			    background: #ff758c;
+			    transform: translateY(-5px);
+			    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+			}
+
+			footer {
+			    text-align: center;
+			    padding: 10px 0;
+			    background-color: #2C3E50;
+			    color: white;
+			    position: fixed;
+			    width: 100%;
+			    bottom: 0;
+			    box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+			    animation: fadeIn 2s;
+			}
+
+			footer p {
+			    margin: 0;
+			}
+
+			@keyframes fadeIn {
+			    0% { opacity: 0; }
+			    100% { opacity: 1; }
+			}
+
+			@keyframes slideIn {
+			    0% { transform: translateY(20px); opacity: 0; }
+			    100% { transform: translateY(0); opacity: 1; }
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h2>Forgot Password Page</h2>
+			<form id="resetForm">
+				<div class="form-group">
+					<label for="username">Username:</label>
+					<input type="email" id="username" name="username" required>
+				</div>
+				<div class="form-group">
+					<label for="newPassword">New Password:</label>
+					<div class="input-wrapper">
+						<input type="password" id="newPassword" name="newPassword" required>
+						<span class="eye-icon" onclick="togglePasswordVisibility('newPassword')">&#128065;</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="confirmPassword">Confirm Password:</label>
+					<div class="input-wrapper">
+						<input type="password" id="confirmPassword" name="confirmPassword" required>
+						<span class="eye-icon" onclick="togglePasswordVisibility('confirmPassword')">&#128065;</span>
+					</div>
+				</div>
+				<button type="submit">Reset Password</button>
+			</form>
+			<div id="message"></div>
+		</div>
+		<script>
+			document.getElementById('resetForm').addEventListener('submit', function(e) {
+				e.preventDefault();
+
+				const username = document.getElementById('username').value;
+				const newPassword = document.getElementById('newPassword').value;
+				const confirmPassword = document.getElementById('confirmPassword').value;
+
+				if (newPassword !== confirmPassword) {
+					const message = document.getElementById('message');
+					message.innerHTML = 'Passwords do not match.';
+					message.style.color = 'red';
+					return;
+				}
+
+				fetch('/flawtrack/reset-password', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ username, newPassword })
+				})
+				.then(response => response.json())
+				.then(data => {
+					const message = document.getElementById('message');
+					if (data.success) {
+						message.innerHTML = 'Password reset successfully. Redirecting to login page...';
+						message.style.color = 'green';
+						setTimeout(() => {
+							window.location.href = '/flawtrack/login';
+						}, 3000);
+					} else {
+						message.innerHTML = 'Failed to reset password.';
+						message.style.color = 'red';
+					}
+				})
+				.catch(error => {
+					console.error('Error', error);
+				});
+			});
+
+			function togglePasswordVisibility(id) {
+				const field = document.getElementById(id);
+				if (field.type === 'password') {
+					field.type = 'text';
+				} else {
+					field.type = 'password';
+				}
+			}
+		</script>
+		<footer>
+			<p>&copy; 2024 Your Company. All rights reserved.</p>
+		</footer>
+	</body>
+</html>
